@@ -30,7 +30,7 @@ class BlogController extends Controller {
         $request->validate([
             'nombre' => 'required|string|max:60',
             'apellidos' => 'required|string|max:100',
-            'correo' => 'required|email|max:100|unique:blog,correo',
+            'correo' => 'required|email|max:100|unique:alumnos,correo',
             'telefono' => 'nullable|string|max:15',
             'fecha_nacimiento' => 'nullable|date',
             'nota_media' => 'nullable|numeric|min:0|max:10',
