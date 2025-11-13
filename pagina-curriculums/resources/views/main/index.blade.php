@@ -5,9 +5,9 @@
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
     @foreach($blogs as $blog)
     <div class="col">
-        <div class="card shadow-sm" style="min-height: 450px;">
+        <div class="card h-100 shadow-lg border-0 rounded-4 overflow-hidden" style="transition: transform 0.3s;">
             @php
-                $url = $blog->path 
+                $url = $blog->path
                     ? url('storage/' . $blog->path)
                     : url('assets/img/fotohtafia.jpg');
             @endphp
@@ -44,17 +44,18 @@
                 <text x="5%" y="30%" fill="#eceeef"
                     dy=".3em" style="font-weight: bold; font-size: 1.5rem;">{{ $blog->title }}</text>
             </svg>-->
-            <img src="{{ $url }}" 
-                alt="Foto de {{ $blog->nombre }} {{ $blog->apellidos }}" 
-                class="card-img-top" 
-                style="height: 225px;">
-                
-            <div class="card-body text-center">
-                <h5 class="card-title fw-bold">
-                    {{ $blog->nombre }} {{ $blog->apellidos }}
-                </h5>
+	<div class="position-relative">
+            <img src="{{ asset($blog->path) }}"
+    		alt="Foto de {{ $blog->nombre }} {{ $blog->apellidos }}"
+     		class="card-img-top"
+     		style="height: 225px; object-fit: cover;">
 
-                <p class="text-muted mb-1">
+		<div class="position-absolute bottom-0 start-0 w-100 p-2" style="background: rgba(0,0,0,0.4);">
+            		<h5 class="text-white m-0" style="font-size: 1.2rem; font-weight: 600;">{{ $blog->nombre }} {{ $blog->apellidos }}</h5>
+        	</div>
+	</div>
+	<div class="card-body text-center">
+	 	<p class="text-muted mb-1">
                     <i class="bi bi-envelope"></i> {{ $blog->correo }}
                 </p>
 
@@ -79,5 +80,12 @@
     </div>
     @endforeach
 </div>
+
+<style>
+	.card:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 1rem 2rem rgba(0,0,0,0.2);
+	}
+</style>
 
 @endsection

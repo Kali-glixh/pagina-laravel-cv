@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use App\Models\Blog;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
@@ -46,19 +47,19 @@ class BlogController extends Controller {
         $blog->path = null;
         //esta parte del codigo me soluciona un error que me daba todo null, se la pedi a la ia
         try {
-        $result = $blog->save(); 
+        $result = $blog->save();
 
         if ($result) {
-            $path = $this->upload($request, $blog->id); 
-            
-            if ($path !== null) { 
+            $path = $this->upload($request, $blog->id);
+
+            if ($path !== null) {
                 $blog->path = $path;
                 $result = $blog->save();
             }
         }
-        
+
         $message = 'El nuevo registro ha sido añadido.';
-        
+
     } catch(UniqueConstraintViolationException $e) {
         $message = 'Ya existe un registro con ese correo electrónico.';
         $result = false;
@@ -83,9 +84,9 @@ class BlogController extends Controller {
         if (!$image) {
             return null;
         }
-        $fileName = $id . '_' . time() . $image->getClientOriginalExtension();
+        $fileName = $id . '_' . time() . '.' . $image->getClientOriginalExtension();
         $path = $image->storeAs('images', $fileName, 'public');
-        return $path;
+        return Storage::url($path);
         //dd([storage_path('app/public') . '/' . $path1, storage_path('app/private') . '/' . $path2]);
     }
 
@@ -103,7 +104,6 @@ class BlogController extends Controller {
             return view('blog.show', ['blog' => $blog]);
         }
     }
-
     function edit(Blog $blog) {
         return view('blog.edit', ['blog' => $blog]);
     }
@@ -145,13 +145,13 @@ class BlogController extends Controller {
     }
 
     function destroy(Blog $blog) {
-        
+
         try {
             $result = $blog->delete();
-            $message = 'The new has been deleted.';
+            $message = 'The Curriculum has been deleted.';
         } catch(\Exception $e) {
             $result = false;
-            $message = 'The new has not been deleted.';
+            $message = 'The Curriculum has not been deleted.';
         }
         $messageArray = [
             'general' => $message

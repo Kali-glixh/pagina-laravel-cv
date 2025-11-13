@@ -6,35 +6,44 @@
 
 @section('content')
 @php
-//use Carbon\Carbon;
 @endphp
-<header class="masthead" style="background-color: transparent;">
-    <div class="container position-relative px-4 px-lg-5">
-        <div class="row gx-4 gx-lg-5 align-items-center">
-            <div class="col-md-3">
-                <img src="{{ $blog->getPath() }}" alt="Foto de {{ $blog->nombre }}" class="img-fluid rounded">
-            </div>
-        </div>
-        <div class="row gx-4 gx-lg-5 mt-3">
-            <div class="col-md-9">
-                <h1>{{ $blog->nombre }} {{ $blog->apellidos }}</h1>
-            </div>
-            <div class="col-md-12">
-                <h2 class="subheading">Nota media: {{ $blog->nota_media }}</h2>
-                <span class="d-block">
-                    <i class="fas fa-envelope me-2"></i>Correo: <a href="mailto:{{ $blog->correo }}">{{ $blog->correo }}</a>
-                </span>
-                <span class="d-block">
-                    <i class="fas fa-phone me-2"></i>Teléfono: {{ $blog->telefono }}
-                </span>
-                <span class="d-block">
-                    <i class="fas fa-birthday-cake me-2"></i>Nacimiento: {{ $blog->fecha_nacimiento }}
-                </span>
-            </div>
-        </div>
+<header class="masthead py-5" style="background-color: transparent;">
+    <div class="container px-4 px-lg-5">
+        <div class="row justify-content-center text-center">
+            <div class="col-md-6">
+                <div class="profile-img mb-3">
+               		 <img src="{{ $blog->getPath() }}"
+                    		 alt="Foto de {{ $blog->nombre }}"
+                    		 class="img-fluid">
+		</div>
+
+                <h1 class="fw-bold">{{ $blog->nombre }} {{ $blog->apellidos }}</h1>
+
+                @if($blog->nota_media)
+                    <h4 class="text-muted mb-3 animate-fade-delay">Nota media: {{ $blog->nota_media }}</h4>
+                @endif
+
+		<div class="contact-info">
+	                <div class="d-block text-muted mb-2">
+        	            <i class="fas fa-envelope me-2"></i>
+                	    <a href="mailto:{{ $blog->correo }}">{{ $blog->correo }}</a>
+              		</div>
+                	@if($blog->telefono)
+                    		<div class="d-block text-muted mb-2">
+                        		<i class="fas fa-phone me-2"></i>{{ $blog->telefono }}
+                    		</div>
+                	@endif
+                	@if($blog->fecha_nacimiento)
+                    		<div class="d-block text-muted mb-2">
+                        		<i class="fas fa-birthday-cake me-2"></i>{{ $blog->fecha_nacimiento }}
+                    		</div>
+                	@endif
+            		</div>
+        	</div>
+	</div>
     </div>
 </header>
-<article class="mb-4">
+<article class="mb-4 section-card animate-up">
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">

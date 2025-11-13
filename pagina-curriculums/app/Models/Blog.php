@@ -10,22 +10,24 @@ class Blog extends Model {
 
     //los campos que se rellenan manualmente
     protected $fillable = [
-        'nombre', 
-        'apellidos', 
-        'correo', 
-        'telefono', 
-        'fecha_nacimiento', 
-        'nota_media', 
-        'experiencia', 
-        'formacion', 
+        'nombre',
+        'apellidos',
+        'correo',
+        'telefono',
+        'fecha_nacimiento',
+        'nota_media',
+        'experiencia',
+        'formacion',
         'habilidades',
+	'path',
     ];
 
     function getPath() {
-        $url = url('assets/img/fotografia.jpg');
-        if($this->path != null) {
-            $url = url('storage/' . $this->path);
-        }
-        return $url;
+        $url = asset('assets/img/fotografia.jpg');
+        if ($this->path) {
+		$ruta = str_replace(['public/', 'storage/'], '', $this->path);
+		$url = asset('storage/' . $ruta);
+   	}
+	return $url;
     }
 }
